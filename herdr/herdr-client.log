@@ -1,0 +1,21 @@
+2026-07-16T16:38:19.859712Z  INFO herdr::logging: herdr starting event="app.startup" subsystem="client" outcome="started" pid=48807
+2026-07-16T16:38:19.859842Z  INFO herdr::client: connecting to server path=/Users/ali/.config/herdr/herdr-client.sock
+2026-07-16T16:38:19.932776Z  INFO herdr::client: handshake succeeded version=16 encoding=SemanticFrame
+2026-07-17T05:04:35.772260Z  INFO herdr::logging: herdr starting event="app.startup" subsystem="client" outcome="started" pid=75396
+2026-07-17T05:04:35.772418Z  INFO herdr::client: connecting to server path=/Users/ali/.config/herdr/herdr-client.sock
+2026-07-17T05:04:35.935222Z  INFO herdr::client: handshake succeeded version=16 encoding=SemanticFrame
+2026-07-17T05:18:28.734761Z  INFO herdr::logging: herdr starting event="app.startup" subsystem="client" outcome="started" pid=78647
+2026-07-17T05:18:28.735134Z  INFO herdr::client: connecting to server path=/Users/ali/.config/herdr/herdr-client.sock
+2026-07-17T05:18:28.820815Z  INFO herdr::client: handshake succeeded version=16 encoding=SemanticFrame
+2026-07-18T12:36:55.169294Z  INFO herdr::logging: herdr starting event="app.startup" subsystem="client" outcome="started" pid=34233
+2026-07-18T12:36:55.169483Z  INFO herdr::client: connecting to server path=/Users/ali/.config/herdr/herdr-client.sock
+2026-07-18T12:36:55.261521Z  INFO herdr::client: handshake succeeded version=16 encoding=SemanticFrame
+2026-07-18T20:13:01.498372Z  INFO herdr::logging: herdr starting event="app.startup" subsystem="client" outcome="started" pid=61582
+2026-07-18T20:13:01.499141Z  INFO herdr::client: connecting to server path=/Users/ali/.config/herdr/herdr-client.sock
+2026-07-18T20:13:01.535995Z  INFO herdr::client: handshake succeeded version=16 encoding=SemanticFrame
+2026-07-20T19:15:47.319910Z  INFO herdr::logging: herdr starting event="app.startup" subsystem="client" outcome="started" pid=42561
+2026-07-20T19:15:47.320074Z  INFO herdr::client: connecting to server path=/Users/ali/.config/herdr/herdr-client.sock
+2026-07-20T19:15:47.487338Z  INFO herdr::client: handshake succeeded version=16 encoding=SemanticFrame
+2026-07-21T20:02:33.403461Z  INFO herdr::logging: herdr starting event="app.startup" subsystem="client" outcome="started" pid=4263
+2026-07-21T20:02:33.403593Z  INFO herdr::client: connecting to server path=/Users/ali/.config/herdr/herdr-client.sock
+2026-07-21T20:02:33.641060Z  INFO herdr::client: handshake succeeded version=16 encoding=SemanticFrame
