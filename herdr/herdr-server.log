@@ -419,3 +419,131 @@ expected `]`
 2026-07-24T09:40:57.609385Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
 2026-07-24T10:20:33.973449Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
 2026-07-24T10:50:46.784992Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-07-24T12:20:51.584056Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="amp" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/amp.toml
+2026-07-24T12:21:17.751543Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="cline" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/cline.toml
+2026-07-24T12:21:51.933070Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="devin" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/devin.toml
+2026-07-24T12:22:01.438242Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="grok" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/grok.toml
+2026-07-24T12:22:04.288146Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="hermes" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/hermes.toml
+2026-07-24T12:22:14.232845Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="kilo" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/kilo.toml
+2026-07-24T12:22:23.270517Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="kiro" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/kiro.toml
+2026-07-24T12:22:51.546957Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="opencode" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/opencode.toml
+2026-07-24T12:23:09.729654Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="pi" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/pi.toml
+2026-07-24T12:23:19.117328Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="qodercli" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/qodercli.toml
+2026-07-24T13:55:30.543759Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-07-24T14:25:47.322860Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="cursor" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/cursor.toml
+2026-07-24T14:25:55.914267Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="devin" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/devin.toml
+2026-07-24T14:25:58.835696Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="droid" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/droid.toml
+2026-07-24T14:26:16.890299Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="gemini" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/gemini.toml
+2026-07-24T14:26:20.879640Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="grok" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/grok.toml
+2026-07-24T14:26:38.928489Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="hermes" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/hermes.toml
+2026-07-24T14:26:47.776491Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="kilo" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/kilo.toml
+2026-07-24T14:27:02.865462Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="kimi" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/kimi.toml
+2026-07-24T14:27:20.926057Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="kiro" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/kiro.toml
+2026-07-24T14:27:29.653835Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="maki" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/maki.toml
+2026-07-24T14:27:39.055440Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="qodercli" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/qodercli.toml
+2026-07-24T14:27:47.275177Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="copilot" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/github-copilot.toml
+2026-07-24T14:55:24.384707Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="agy" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/antigravity.toml
+2026-07-24T14:55:29.823359Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="cline" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/cline.toml
+2026-07-24T14:55:56.947116Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="devin" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/devin.toml
+2026-07-24T14:56:05.569567Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="droid" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/droid.toml
+2026-07-24T14:56:21.198205Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="gemini" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/gemini.toml
+2026-07-24T14:56:44.241262Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="hermes" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/hermes.toml
+2026-07-24T14:56:53.438962Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="kilo" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/kilo.toml
+2026-07-24T14:57:30.484466Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="pi" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/pi.toml
+2026-07-24T14:57:33.093478Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="qodercli" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/qodercli.toml
+2026-07-24T17:11:52.568149Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="cursor" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/cursor.toml
+2026-07-25T05:45:54.421397Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="claude" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/claude.toml
+2026-07-25T17:49:44.541927Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-07-26T14:22:09.095416Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="hermes" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/hermes.toml
+2026-07-26T15:21:29.149177Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-07-27T14:27:05.617443Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-07-27T14:57:05.672611Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-07-27T16:57:41.235115Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="opencode" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/opencode.toml
+2026-07-27T17:27:22.330720Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="kiro" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/kiro.toml
+2026-07-27T17:57:11.115631Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="droid" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/droid.toml
+2026-07-27T21:57:39.508247Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="droid" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/droid.toml
+2026-07-27T21:58:17.726092Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="hermes" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/hermes.toml
+2026-07-27T21:58:52.763297Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="kiro" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/kiro.toml
+2026-07-27T21:59:10.850282Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="maki" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/maki.toml
+2026-07-27T21:59:28.934720Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="opencode" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/opencode.toml
+2026-07-27T21:59:47.076023Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="pi" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/pi.toml
+2026-07-27T22:00:05.145814Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="qodercli" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/qodercli.toml
+2026-07-27T22:00:23.206160Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="copilot" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/github-copilot.toml
+2026-07-27T22:56:58.370749Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="codex" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/codex.toml
+2026-07-28T00:26:54.539496Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="claude" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/claude.toml
+2026-07-28T02:14:04.916366Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="maki" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/maki.toml
+2026-07-28T03:14:09.161600Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="pi" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/pi.toml
+2026-07-28T03:43:46.997189Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="cline" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/cline.toml
+2026-07-28T03:43:57.552967Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="hermes" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/hermes.toml
+2026-07-28T05:13:53.483298Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="cline" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/cline.toml
+2026-07-28T05:43:51.037160Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="cursor" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/cursor.toml
+2026-07-28T06:18:09.128250Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="kiro" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/kiro.toml
+2026-07-28T10:01:53.033682Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="copilot" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/github-copilot.toml
+2026-07-28T14:01:55.965454Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="claude" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/claude.toml
+2026-07-28T14:02:02.083934Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="grok" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/grok.toml
+2026-07-28T14:02:08.704501Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="pi" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/pi.toml
+2026-07-28T17:34:43.956897Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-07-28T18:05:07.183828Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="kiro" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/kiro.toml
+2026-07-28T18:35:14.292799Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="hermes" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/hermes.toml
+2026-07-28T20:04:57.949227Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-07-28T21:11:45.449841Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="kilo" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/kilo.toml
+2026-07-28T22:11:58.903826Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="qodercli" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/qodercli.toml
+2026-07-29T11:53:24.857532Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="copilot" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/github-copilot.toml
+2026-07-29T13:21:35.850993Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-07-29T14:52:11.204753Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="maki" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/maki.toml
+2026-07-29T15:21:35.903303Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-07-29T16:51:44.433265Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="claude" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/claude.toml
+2026-07-29T16:53:13.223200Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="kilo" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/kilo.toml
+2026-07-29T17:22:07.188139Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="gemini" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/gemini.toml
+2026-07-29T17:23:01.933765Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="kilo" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/kilo.toml
+2026-07-29T19:32:07.137467Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="agy" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/antigravity.toml
+2026-07-29T19:32:32.107500Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="cline" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/cline.toml
+2026-07-29T19:32:35.846904Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="codex" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/codex.toml
+2026-07-29T19:32:53.981544Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="droid" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/droid.toml
+2026-07-29T19:34:00.998060Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="qodercli" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/qodercli.toml
+2026-07-29T19:34:05.116948Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="copilot" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/github-copilot.toml
+2026-07-29T20:32:04.087935Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-07-29T23:00:59.473794Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="claude" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/claude.toml
+2026-07-29T23:01:17.561479Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="cline" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/cline.toml
+2026-07-29T23:32:22.678572Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="codex" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/codex.toml
+2026-07-29T23:49:57.654713Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="cursor" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/cursor.toml
+2026-07-30T08:54:56.966924Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="droid" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/droid.toml
+2026-07-30T08:55:00.035976Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="gemini" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/gemini.toml
+2026-07-30T09:25:06.985754Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="claude" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/claude.toml
+2026-07-30T13:25:43.277427Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="maki" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/maki.toml
+2026-07-30T18:57:13.227985Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="pi" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/pi.toml
+2026-08-01T18:46:57.172140Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="cline" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/cline.toml
+2026-08-01T18:47:46.572746Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="cursor" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/cursor.toml
+2026-08-01T22:57:11.011654Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-08-01T23:27:10.991176Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-08-01T23:57:11.004555Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-08-02T00:27:10.992054Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-08-02T00:57:10.987631Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-08-02T01:27:11.016069Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-08-02T01:57:11.011142Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-08-02T02:27:11.029371Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-08-02T02:57:11.018076Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-08-02T03:27:11.040018Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-08-02T03:57:11.037169Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-08-02T04:27:11.055819Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-08-02T04:57:11.065748Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-08-02T05:27:11.084098Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-08-02T05:57:11.079179Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-08-02T06:27:11.079600Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-08-02T06:57:11.086937Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-08-02T07:27:11.096235Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-08-02T07:57:11.101964Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-08-02T08:27:11.111638Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-08-02T08:57:11.129077Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-08-02T09:27:11.135952Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-08-02T11:43:20.568770Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-08-02T14:43:20.656482Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
+2026-08-02T20:43:59.716973Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="devin" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/devin.toml
+2026-08-03T12:31:44.732802Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="codex" error=TOML parse error at line 56, column 68
+   |
+56 |   { contains = ["would you like to"], any = [{ contains = ["yes"] }id = "codex"
+   |                                                                    ^
+invalid array
+expected `]`
+
+2026-08-03T20:51:04.512392Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="qodercli" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/qodercli.toml

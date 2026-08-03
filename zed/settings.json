@@ -8,7 +8,8 @@
 // from the command palette or from `Zed` application menu.
 {
 	// ---* UI *--------------------------------------------------
-	"diff_view_style": "split",
+	"base_keymap": "VSCode",
+ "diff_view_style": "split",
  "language_models": {
 		"openai_compatible": {},
 	},
