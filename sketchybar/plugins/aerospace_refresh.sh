@@ -187,10 +187,8 @@ if [[ -n "$status_displays" ]]; then
   arguments+=(
     --set system.time "display=$status_displays"
     --set system.wifi "display=$status_displays"
-    --set system.bluetooth "display=$status_displays"
     --set system.volume "display=$status_displays"
     --set system.battery "display=$status_displays"
-    --set system.status "display=$status_displays"
   )
 fi
 

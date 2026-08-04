@@ -4,10 +4,20 @@ for workspace in {1..9}; do
   "$SKETCHYBAR_BIN" --add item "aerospace.space.$workspace" left \
     --set "aerospace.space.$workspace" \
       drawing=off \
+      padding_left="$WORKSPACE_ITEM_GAP" \
+      padding_right="$WORKSPACE_ITEM_GAP" \
       icon="$workspace" \
       label.drawing=off \
       click_script="'$CONFIG_DIR/plugins/aerospace_click.sh' '$workspace'"
 done
+
+# Bracket edge padding is independent of label visibility, so empty edge
+# workspaces never touch the rounded capsule boundary.
+"$SKETCHYBAR_BIN" \
+  --set aerospace.space.1 padding_left="$CAPSULE_EDGE_PADDING" \
+  --set aerospace.space.5 padding_right="$CAPSULE_EDGE_PADDING" \
+  --set aerospace.space.6 padding_left="$CAPSULE_EDGE_PADDING" \
+  --set aerospace.space.9 padding_right="$CAPSULE_EDGE_PADDING"
 
 "$SKETCHYBAR_BIN" \
   --add bracket aerospace.spaces.main \

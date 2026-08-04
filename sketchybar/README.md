@@ -4,8 +4,7 @@ This configuration creates two compact workspace capsules and one matching
 system-status capsule. Workspaces 1–5 follow AeroSpace's main-monitor
 assignment; workspaces 6–9 follow its secondary-monitor assignment. A small
 focused-application capsule appears only on the currently focused display.
-Time, Wi-Fi, Bluetooth, volume, and battery status appear on the right of both
-displays.
+Time, Wi-Fi, volume, and battery status appear on the right of both displays.
 
 ## Files
 
@@ -20,9 +19,9 @@ displays.
   all-window query, and one focused-window query. It hashes the complete state
   and batches changes into one SketchyBar update.
 - `helpers/app_icon.sh` is the single Nerd Font application icon map.
-- `plugins/time.sh`, `wifi.sh`, `bluetooth.sh`, `volume.sh`, and `battery.sh`
-  update the right-side items. Bluetooth uses `blueutil` when it is already
-  installed and otherwise falls back to the macOS power-state preference.
+- `plugins/time.sh`, `wifi.sh`, `volume.sh`, and `battery.sh` update the
+  right-side items. Wi-Fi uses interface state and its assigned IP address as
+  a fallback when macOS does not reveal the current network name.
 
 ## Install and reload
 

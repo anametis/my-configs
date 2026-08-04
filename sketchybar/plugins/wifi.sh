@@ -18,11 +18,17 @@ color="$EMPTY_TEXT"
 if [[ -n "$wifi_device" ]]; then
   power_state=$(/usr/sbin/networksetup -getairportpower "$wifi_device" 2>/dev/null || true)
   network_state=$(/usr/sbin/networksetup -getairportnetwork "$wifi_device" 2>/dev/null || true)
+  wifi_address=$(/usr/sbin/ipconfig getifaddr "$wifi_device" 2>/dev/null || true)
+  interface_status=$(
+    /sbin/ifconfig "$wifi_device" 2>/dev/null |
+      /usr/bin/awk '/status:/ { print $2; exit }'
+  )
 
   if [[ "$power_state" == *": On" ]]; then
+    icon="$WIFI_CONNECTED_ICON"
     color="$OCCUPIED_TEXT"
-    if [[ "$network_state" == "Current Wi-Fi Network:"* ]]; then
-      icon="$WIFI_CONNECTED_ICON"
+    if [[ "$network_state" == "Current Wi-Fi Network:"* ]] ||
+       { [[ -n "$wifi_address" ]] && [[ "$interface_status" == "active" ]]; }; then
       color="$FOCUSED_TEXT"
     fi
   fi
