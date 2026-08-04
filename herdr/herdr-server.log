@@ -547,3 +547,4 @@ invalid array
 expected `]`
 
 2026-08-03T20:51:04.512392Z  WARN herdr::detect::manifest_update: agent detection manifest update failed for agent agent="qodercli" error=fetch failed: failed to fetch https://herdr.dev/agent-detection/qodercli.toml
+2026-08-04T12:24:11.368167Z  WARN herdr::detect::manifest_update: agent detection manifest update failed: failed to fetch https://herdr.dev/agent-detection/index.toml
