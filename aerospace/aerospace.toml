@@ -1,8 +1,25 @@
 # AeroSpace configuration
-# Location: ~/.aerospace.toml
-# Documentation: https://nikitabobko.github.io/AeroSpace/guide
+# Install as: ~/.aerospace.toml
+# Guide: https://nikitabobko.github.io/AeroSpace/guide
+#
+# Native menu-bar workflow:
+#   1. Keep numeric workspace names so AeroSpace can render compact number icons.
+#   2. In AeroSpace → Experimental UI Settings, select "i3 style ordered".
+#   3. The menu-bar item shows active/non-empty workspace numbers.
+#   4. Click the AeroSpace menu-bar item to see which apps are in each workspace.
+#
+# Workspace map:
+#   0 = Temporary / overflow
+#   1 = Web                (Brave and Brave apps)
+#   2 = Terminal + AI      (Ghostty and Claude)
+#   3 = Code               (editor)
+#   4 = Notes              (Notion and Obsidian)
+#   5 = Communication      (Slack and Discord)
+#   6 = Media              (Premiere Pro)
+#   7 = VPN
+#   8 = Utilities
+#   9 = Scratch / overflow
 
-# Use the latest configuration behavior and deprecation rules.
 config-version = 2
 
 # Launch AeroSpace automatically when you sign in.
@@ -48,9 +65,9 @@ outer.bottom = 0
 outer.left = 0
 outer.right = 0
 
-# -----------------------------------------------------------------------------
+# =============================================================================
 # Main mode
-# -----------------------------------------------------------------------------
+# =============================================================================
 
 [mode.main.binding]
 
@@ -110,9 +127,9 @@ alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 # Enter service mode.
 alt-shift-semicolon = 'mode service'
 
-# -----------------------------------------------------------------------------
+# =============================================================================
 # Service mode
-# -----------------------------------------------------------------------------
+# =============================================================================
 
 [mode.service.binding]
 esc = ['reload-config', 'mode main']
@@ -125,9 +142,9 @@ alt-shift-j = ['join-with down', 'mode main']
 alt-shift-k = ['join-with up', 'mode main']
 alt-shift-l = ['join-with right', 'mode main']
 
-# -----------------------------------------------------------------------------
-# Application workspace rules
-# -----------------------------------------------------------------------------
+# =============================================================================
+# Automatic application placement
+# =============================================================================
 
 # Workspace 1 — browsers
 [[on-window-detected]]
@@ -138,7 +155,7 @@ run = 'move-node-to-workspace 1'
 if = 'test %{app-bundle-id} = com.brave.Browser.app.adcclpceapdbhchilkbngkehpppaefko'
 run = 'move-node-to-workspace 1'
 
-# Workspace 2 — terminal and Claude
+# Workspace 2 — Terminal + AI
 [[on-window-detected]]
 if = 'test %{app-bundle-id} = com.mitchellh.ghostty'
 run = 'move-node-to-workspace 2'
@@ -147,12 +164,12 @@ run = 'move-node-to-workspace 2'
 if = 'test %{app-bundle-id} = com.anthropic.claudefordesktop'
 run = 'move-node-to-workspace 2'
 
-# Workspace 3 — editor
+# Workspace 3 — Code editor
 [[on-window-detected]]
 if = 'test %{app-bundle-id} = com.todesktop.230313mzl4w4u92'
 run = 'move-node-to-workspace 3'
 
-# Workspace 4 — notes and knowledge tools
+# Workspace 4 — Notes
 [[on-window-detected]]
 if = 'test %{app-bundle-id} = notion.id'
 run = 'move-node-to-workspace 4'
@@ -161,7 +178,7 @@ run = 'move-node-to-workspace 4'
 if = 'test %{app-bundle-id} = md.obsidian'
 run = 'move-node-to-workspace 4'
 
-# Workspace 5 — communication
+# Workspace 5 — Communication
 [[on-window-detected]]
 if = 'test %{app-bundle-id} = com.tinyspeck.slackmacgap'
 run = 'move-node-to-workspace 5'
@@ -170,14 +187,14 @@ run = 'move-node-to-workspace 5'
 if = 'test %{app-bundle-id} = com.hnc.Discord'
 run = 'move-node-to-workspace 5'
 
-# Workspace 6 — video editing
+# Workspace 6 — Media
 [[on-window-detected]]
 if = 'test %{app-bundle-id} = com.adobe.PremierePro.26'
 run = 'move-node-to-workspace 6'
 
-# -----------------------------------------------------------------------------
+# =============================================================================
 # Workspace-to-monitor assignments
-# -----------------------------------------------------------------------------
+# =============================================================================
 
 # Workspaces 1–5 stay on the macOS-designated main monitor.
 # Workspaces 6–9 stay on the other monitor in a two-monitor setup.
