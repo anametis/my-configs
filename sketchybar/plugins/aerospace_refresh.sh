@@ -108,6 +108,20 @@ done <<< "$window_state"
 arguments=()
 main_display="${display_1:-}"
 secondary_display="${display_6:-}"
+status_displays=""
+
+for workspace in {1..9}; do
+  display_variable="display_$workspace"
+  display_value="${!display_variable}"
+  [[ -n "$display_value" ]] || continue
+  if [[ ",$status_displays," != *",$display_value,"* ]]; then
+    if [[ -n "$status_displays" ]]; then
+      status_displays+=",$display_value"
+    else
+      status_displays="$display_value"
+    fi
+  fi
+done
 
 for workspace in {1..9}; do
   name="aerospace.space.$workspace"
@@ -168,6 +182,16 @@ if [[ -n "$main_display" ]]; then
 fi
 if [[ -n "$secondary_display" ]]; then
   arguments+=(--set aerospace.spaces.secondary drawing=on "display=$secondary_display")
+fi
+if [[ -n "$status_displays" ]]; then
+  arguments+=(
+    --set system.time "display=$status_displays"
+    --set system.wifi "display=$status_displays"
+    --set system.bluetooth "display=$status_displays"
+    --set system.volume "display=$status_displays"
+    --set system.battery "display=$status_displays"
+    --set system.status "display=$status_displays"
+  )
 fi
 
 if [[ -n "$front_state" ]]; then

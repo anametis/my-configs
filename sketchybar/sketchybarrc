@@ -43,17 +43,20 @@ defaults=(
   background.drawing=on
   background.color="$TRANSPARENT"
   background.height="$ITEM_HEIGHT"
-  background.corner_radius=9
+  background.corner_radius="$ACTIVE_CORNER_RADIUS"
   background.border_width=0
 )
 "$SKETCHYBAR_BIN" --default "${defaults[@]}"
 
 "$SKETCHYBAR_BIN" \
   --add event aerospace_workspace_change \
-  --add event aerospace_state_change
+  --add event aerospace_state_change \
+  --add event system_status_refresh
 
 source "$CONFIG_DIR/items/aerospace_workspaces.sh"
 source "$CONFIG_DIR/items/front_app.sh"
+source "$CONFIG_DIR/items/system_status.sh"
 
 # The forced pass maps AppKit screen IDs before revealing the items.
 "$CONFIG_DIR/plugins/aerospace_refresh.sh" --force
+"$SKETCHYBAR_BIN" --trigger system_status_refresh

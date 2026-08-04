@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
 export BAR_HEIGHT=34
-export ITEM_HEIGHT=26
-export CORNER_RADIUS=14
-export WORKSPACE_PADDING=7
+export ITEM_HEIGHT=24
+export CORNER_RADIUS=8
+export ACTIVE_CORNER_RADIUS=8
+export WORKSPACE_PADDING=6
 export ICON_GAP=4
 
 export SHOW_DUPLICATE_WINDOWS="${SHOW_DUPLICATE_WINDOWS:-true}"
@@ -14,6 +15,7 @@ export FRONT_APP_MAX_LENGTH="${FRONT_APP_MAX_LENGTH:-22}"
 export NUMBER_FONT="SF Pro:Semibold:15.0"
 export APP_ICON_FONT="Symbols Nerd Font:Regular:14.0"
 export FRONT_APP_FONT="SF Pro:Medium:14.0"
+export STATUS_LABEL_FONT="SF Pro:Medium:13.0"
 
 resolve_command() {
   local command_name="$1"

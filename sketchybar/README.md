@@ -1,9 +1,11 @@
 # Minimal AeroSpace workspace bar
 
-This configuration creates two compact workspace capsules and no system
-widgets. Workspaces 1–5 follow AeroSpace's main-monitor assignment; workspaces
-6–9 follow its secondary-monitor assignment. A small focused-application
-capsule appears only on the currently focused display.
+This configuration creates two compact workspace capsules and one matching
+system-status capsule. Workspaces 1–5 follow AeroSpace's main-monitor
+assignment; workspaces 6–9 follow its secondary-monitor assignment. A small
+focused-application capsule appears only on the currently focused display.
+Time, Wi-Fi, Bluetooth, volume, and battery status appear on the right of both
+displays.
 
 ## Files
 
@@ -13,10 +15,14 @@ capsule appears only on the currently focused display.
 - `items/aerospace_workspaces.sh` creates the nine static clickable items, two
   brackets, and one hidden watcher.
 - `items/front_app.sh` creates the focused-application capsule.
+- `items/system_status.sh` creates the right-side status capsule.
 - `plugins/aerospace_refresh.sh` performs one all-workspace query, one
   all-window query, and one focused-window query. It hashes the complete state
   and batches changes into one SketchyBar update.
 - `helpers/app_icon.sh` is the single Nerd Font application icon map.
+- `plugins/time.sh`, `wifi.sh`, `bluetooth.sh`, `volume.sh`, and `battery.sh`
+  update the right-side items. Bluetooth uses `blueutil` when it is already
+  installed and otherwise falls back to the macOS power-state preference.
 
 ## Install and reload
 
