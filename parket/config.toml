@@ -1,0 +1,18 @@
+workspace_count = 9
+master_ratio = 0.55
+modifier = "option"
+
+[bindings]
+focus_next = "j"
+focus_prev = "k"
+swap_master = "return"
+toggle_layout = "m"
+focus_monitor_prev = "comma"
+focus_monitor_next = "period"
+move_monitor_prev = "shift+comma"
+move_monitor_next = "shift+period"
+last_workspace = "tab"
+
+[[custom]]
+key = "shift+return"
+command = "open -n -a Terminal"
