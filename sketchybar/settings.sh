@@ -1,41 +1,54 @@
 #!/usr/bin/env bash
 
-# Geometry stays intentionally compact; the slightly softer radii and tighter
-# internal spacing make the existing capsule layout feel less boxy.
-export BAR_HEIGHT=32
-export ITEM_HEIGHT=26
-export CORNER_RADIUS=8
-export ACTIVE_CORNER_RADIUS=6
-export WORKSPACE_PADDING=5
+# Workspace layout: every workspace is a visible capsule. Empty workspaces are
+# number-only; occupied workspaces naturally expand to include their app icons.
+export BAR_HEIGHT=40
+export ITEM_HEIGHT=30
+export CAPSULE_HEIGHT=34
+export CORNER_RADIUS=11
+export WORKSPACE_CORNER_RADIUS=9
+
+# Spacing: related content stays close, separate groups get breathing room.
+export WORKSPACE_NUMBER_PADDING=9
+export WORKSPACE_GROUP_EDGE_PADDING=2
+export WORKSPACE_GROUP_GAP=5
+export CAPSULE_EDGE_PADDING=5
+export FRONT_APP_OUTER_GAP=13
+export FRONT_APP_ICON_LEFT_PADDING=10
+export FRONT_APP_ICON_RIGHT_PADDING=4
+export FRONT_APP_LABEL_LEFT_PADDING=5
+export FRONT_APP_LABEL_RIGHT_PADDING=12
+
+# Compatibility values used by defaults/status items.
+export WORKSPACE_PADDING="$WORKSPACE_NUMBER_PADDING"
 export WORKSPACE_ITEM_GAP=1
-export CAPSULE_EDGE_PADDING=4
-export ICON_GAP=4
 
-# Workspace app icons are native macOS app images rendered by SketchyBar.
-# These values are deliberately small enough to keep several apps readable.
-export APP_IMAGE_WIDTH=19
-export APP_IMAGE_HEIGHT=18
-export APP_IMAGE_SCALE=0.72
-export APP_IMAGE_CORNER_RADIUS=4
-export FRONT_APP_IMAGE_WIDTH=19
-export FRONT_APP_IMAGE_HEIGHT=18
-export FRONT_APP_IMAGE_SCALE=0.74
-export FRONT_APP_IMAGE_CORNER_RADIUS=4
+# Native macOS application artwork.
+export APP_IMAGE_WIDTH=22
+export APP_IMAGE_HEIGHT=22
+export APP_IMAGE_SCALE=0.64
+export APP_IMAGE_CORNER_RADIUS=6
+export APP_IMAGE_PADDING=3
 
-export SHOW_DUPLICATE_WINDOWS="${SHOW_DUPLICATE_WINDOWS:-true}"
+export FRONT_APP_IMAGE_WIDTH=22
+export FRONT_APP_IMAGE_HEIGHT=22
+export FRONT_APP_IMAGE_SCALE=0.62
+export FRONT_APP_IMAGE_CORNER_RADIUS=6
+
+# One icon per application keeps a workspace readable with many windows.
+export SHOW_DUPLICATE_WINDOWS="${SHOW_DUPLICATE_WINDOWS:-false}"
 export MAX_APP_ICONS="${MAX_APP_ICONS:-4}"
 export RECONCILE_SECONDS="${RECONCILE_SECONDS:-4}"
 export FRONT_APP_MAX_LENGTH="${FRONT_APP_MAX_LENGTH:-22}"
 
-export NUMBER_FONT="SF Pro:Semibold:14.0"
-export OVERFLOW_FONT="SF Pro:Medium:10.0"
-export FALLBACK_APP_ICON_FONT="Symbols Nerd Font:Regular:13.0"
-export SYSTEM_ICON_FONT="Symbols Nerd Font:Regular:13.0"
-export FRONT_APP_FONT="SF Pro:Medium:13.5"
-export STATUS_LABEL_FONT="SF Pro:Medium:12.5"
+export NUMBER_FONT="SF Pro:Semibold:15.5"
+export EMPTY_NUMBER_FONT="SF Pro:Medium:15.5"
+export OVERFLOW_FONT="SF Pro:Semibold:10.5"
+export FALLBACK_APP_ICON_FONT="Symbols Nerd Font:Regular:13.5"
+export SYSTEM_ICON_FONT="Symbols Nerd Font:Regular:14.0"
+export FRONT_APP_FONT="SF Pro:Semibold:16.0"
+export STATUS_LABEL_FONT="SF Pro:Medium:13.0"
 
-# Backwards-compatible alias for the small number of existing scripts that may
-# still refer to APP_ICON_FONT.
 export APP_ICON_FONT="$SYSTEM_ICON_FONT"
 
 resolve_command() {

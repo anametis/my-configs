@@ -122,6 +122,7 @@ done
 
 for workspace in {1..9}; do
   name="aerospace.space.$workspace"
+  group_name="aerospace.group.$workspace"
   count_variable="count_$workspace"
   focused_variable="focused_$workspace"
   visible_variable="visible_$workspace"
@@ -133,26 +134,21 @@ for workspace in {1..9}; do
 
   if [[ -z "$display_value" ]]; then
     arguments+=(--set "$name" drawing=off)
+    arguments+=(--set "$group_name" drawing=off)
     for ((slot=1; slot<=MAX_APP_ICONS; slot++)); do
       arguments+=(--set "aerospace.app.$workspace.$slot" drawing=off)
     done
+    if (( workspace != 5 && workspace != 9 )); then
+      arguments+=(--set "aerospace.gap.$workspace" drawing=off)
+    fi
     continue
   fi
 
   text_color="$EMPTY_TEXT"
-  background_color="$TRANSPARENT"
-  border_color="$TRANSPARENT"
-  border_width=0
-
   if [[ "$focused_value" == "true" ]]; then
     text_color="$FOCUSED_TEXT"
-    background_color="$ACTIVE_BACKGROUND"
-    border_color="$ACTIVE_BORDER"
-    border_width=1
   elif [[ "$visible_value" == "true" ]]; then
     text_color="$VISIBLE_TEXT"
-    border_color="$CAPSULE_BORDER"
-    border_width=1
   elif (( count_value > 0 )); then
     text_color="$OCCUPIED_TEXT"
   fi
@@ -170,17 +166,48 @@ for workspace in {1..9}; do
     overflow_drawing=off
   fi
 
+  # Every workspace uses the same capsule geometry. Content determines width:
+  # empty = number only, occupied = number + app icons. Focus only changes style.
+  number_font="$EMPTY_NUMBER_FONT"
+  group_background="$WORKSPACE_BACKGROUND"
+  group_border="$WORKSPACE_BORDER"
+  group_border_width=1
+
+  if (( count_value > 0 )); then
+    number_font="$NUMBER_FONT"
+  fi
+
+  if [[ "$focused_value" == "true" ]]; then
+    group_background="$ACTIVE_BACKGROUND"
+    group_border="$ACTIVE_BORDER"
+    group_border_width=2
+  elif [[ "$visible_value" == "true" ]]; then
+    group_background="$VISIBLE_BACKGROUND"
+    group_border="$VISIBLE_BORDER"
+  fi
+
   arguments+=(
     --set "$name"
       drawing=on
       "display=$display_value"
       "label=$overflow_label"
       "label.drawing=$overflow_drawing"
+      icon.drawing=on
+      "icon.font=$number_font"
+      "icon.padding_left=$WORKSPACE_NUMBER_PADDING"
+      "icon.padding_right=$WORKSPACE_NUMBER_PADDING"
       "icon.color=$text_color"
       "label.color=$text_color"
-      "background.color=$background_color"
-      "background.border_color=$border_color"
-      "background.border_width=$border_width"
+      background.drawing=off
+  )
+
+  arguments+=(
+    --set "$group_name"
+      drawing=on
+      "display=$display_value"
+      "background.color=$group_background"
+      "background.border_color=$group_border"
+      "background.border_width=$group_border_width"
   )
 
   for ((slot=1; slot<=MAX_APP_ICONS; slot++)); do
@@ -205,6 +232,15 @@ for workspace in {1..9}; do
       )
     fi
   done
+
+  if (( workspace != 5 && workspace != 9 )); then
+    arguments+=(
+      --set "aerospace.gap.$workspace"
+        drawing=on
+        "display=$display_value"
+        "width=$WORKSPACE_GROUP_GAP"
+    )
+  fi
 done
 
 if [[ -n "$main_display" ]]; then
@@ -230,25 +266,34 @@ if [[ -n "$front_state" ]]; then
   IFS="$separator" read -r front_workspace front_name front_bundle front_display <<< "$front_state"
   front_image="$(app_image_source "$front_bundle" "$front_name")"
   arguments+=(
-    --set aerospace.front_app
+    --set aerospace.front_app.gap
+      drawing=on
+      "display=$front_display"
+    --set aerospace.front_app.icon
+      drawing=on
+      "display=$front_display"
+      "background.image=$front_image"
+      background.image.drawing=on
+    --set aerospace.front_app.label
       drawing=on
       "display=$front_display"
       "label=$front_name"
-      "icon.background.image=$front_image"
-      icon.background.image.drawing=on
+    --set aerospace.front_app
+      drawing=on
   )
 else
   arguments+=(
-    --set aerospace.front_app
-      drawing=off
-      icon.background.image.drawing=off
+    --set aerospace.front_app.gap drawing=off
+    --set aerospace.front_app.icon drawing=off background.image.drawing=off
+    --set aerospace.front_app.label drawing=off
+    --set aerospace.front_app drawing=off
   )
 fi
 
-if [[ "${SENDER:-}" == "aerospace_workspace_change" ]]; then
-  "$SKETCHYBAR_BIN" --animate tanh 8 "${arguments[@]}"
-else
-  "$SKETCHYBAR_BIN" "${arguments[@]}"
-fi
+# Structural bracket/drawing updates are intentionally not animated. Animating
+# these properties can leave a transient dark bracket on one display during
+# rapid AeroSpace/display changes. Native app/window updates are cheap enough
+# to apply atomically.
+"$SKETCHYBAR_BIN" "${arguments[@]}"
 
 printf '%s\n' "$state_hash" > "$hash_file"

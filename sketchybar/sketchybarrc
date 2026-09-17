@@ -15,17 +15,19 @@ if [[ -z "$SKETCHYBAR_BIN" ]]; then
   exit 1
 fi
 
+# Transparent bar + shorter item capsules intentionally leaves a small clear
+# strip around/below the pills instead of having them touch the window below.
 "$SKETCHYBAR_BIN" --bar \
   position=top \
   display=all \
   height="$BAR_HEIGHT" \
   color="$BAR_COLOR" \
-  blur_radius=24 \
+  blur_radius=0 \
   shadow=off \
   font_smoothing=on \
-  padding_left=7 \
-  padding_right=7 \
-  margin=0 \
+  padding_left=12 \
+  padding_right=12 \
+  margin=2 \
   y_offset=0
 
 defaults=(
@@ -44,7 +46,7 @@ defaults=(
   background.drawing=on
   background.color="$TRANSPARENT"
   background.height="$ITEM_HEIGHT"
-  background.corner_radius="$ACTIVE_CORNER_RADIUS"
+  background.corner_radius="$WORKSPACE_CORNER_RADIUS"
   background.border_width=0
 )
 "$SKETCHYBAR_BIN" --default "${defaults[@]}"
