@@ -2,28 +2,26 @@
 
 # Workspace layout: every workspace is a visible capsule. Empty workspaces are
 # number-only; occupied workspaces naturally expand to include their app icons.
-export BAR_HEIGHT=34
+export BAR_HEIGHT=40
 export ITEM_HEIGHT=30
-export CAPSULE_HEIGHT=32
-export CORNER_RADIUS=9
-export WORKSPACE_CORNER_RADIUS=7
+export CAPSULE_HEIGHT=34
+export CORNER_RADIUS=11
+export WORKSPACE_CORNER_RADIUS=9
 
-# Spacing: workspace brackets add 2pt of background padding per side, so a
-# 10pt spacer produces about 6pt of visible air between neighboring capsules.
-# Related content inside a workspace stays unchanged.
+# Spacing: related content stays close, separate groups get breathing room.
 export WORKSPACE_NUMBER_PADDING=9
-export WORKSPACE_GROUP_EDGE_PADDING=4
-export WORKSPACE_GROUP_GAP=12
+export WORKSPACE_GROUP_EDGE_PADDING=2
+export WORKSPACE_GROUP_GAP=5
 export CAPSULE_EDGE_PADDING=5
-export FRONT_APP_OUTER_GAP=18
+export FRONT_APP_OUTER_GAP=13
 export FRONT_APP_ICON_LEFT_PADDING=10
-export FRONT_APP_ICON_RIGHT_PADDING=3
-export FRONT_APP_LABEL_LEFT_PADDING=4
-export FRONT_APP_LABEL_RIGHT_PADDING=10
+export FRONT_APP_ICON_RIGHT_PADDING=4
+export FRONT_APP_LABEL_LEFT_PADDING=5
+export FRONT_APP_LABEL_RIGHT_PADDING=12
 
 # Compatibility values used by defaults/status items.
 export WORKSPACE_PADDING="$WORKSPACE_NUMBER_PADDING"
-export WORKSPACE_ITEM_GAP=2
+export WORKSPACE_ITEM_GAP=1
 
 # Native macOS application artwork.
 export APP_IMAGE_WIDTH=22

@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+CONFIG_DIR="${CONFIG_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"
+export CONFIG_DIR
+
+# Homebrew services receive a small PATH; keep command discovery predictable.
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+
+source "$CONFIG_DIR/colors.sh"
+source "$CONFIG_DIR/settings.sh"
+source "$CONFIG_DIR/icons.sh"
+
+if [[ -z "$SKETCHYBAR_BIN" ]]; then
+  printf 'SketchyBar: sketchybar executable not found\n' >&2
+  exit 1
+fi
+
+# Transparent bar + shorter item capsules intentionally leaves a small clear
+# strip around/below the pills instead of having them touch the window below.
+"$SKETCHYBAR_BIN" --bar \
+  position=top \
+  display=all \
+  height="$BAR_HEIGHT" \
+  color="$BAR_COLOR" \
+  blur_radius=0 \
+  shadow=off \
+  font_smoothing=on \
+  padding_left=12 \
+  padding_right=12 \
+  margin=2 \
+  y_offset=0
+
+defaults=(
+  updates=on
+  drawing=on
+  padding_left=0
+  padding_right=0
+  icon.font="$NUMBER_FONT"
+  icon.color="$EMPTY_TEXT"
+  icon.padding_left="$WORKSPACE_PADDING"
+  icon.padding_right=3
+  label.font="$OVERFLOW_FONT"
+  label.color="$OCCUPIED_TEXT"
+  label.padding_left=0
+  label.padding_right="$WORKSPACE_PADDING"
+  background.drawing=on
+  background.color="$TRANSPARENT"
+  background.height="$ITEM_HEIGHT"
+  background.corner_radius="$WORKSPACE_CORNER_RADIUS"
+  background.border_width=0
+)
+"$SKETCHYBAR_BIN" --default "${defaults[@]}"
+
+"$SKETCHYBAR_BIN" \
+  --add event aerospace_workspace_change \
+  --add event aerospace_state_change \
+  --add event system_status_refresh
+
+source "$CONFIG_DIR/items/aerospace_workspaces.sh"
+source "$CONFIG_DIR/items/front_app.sh"
+source "$CONFIG_DIR/items/system_status.sh"
+
+# The forced pass maps AppKit screen IDs before revealing the items.
+"$CONFIG_DIR/plugins/aerospace_refresh.sh" --force
+"$SKETCHYBAR_BIN" --trigger system_status_refresh
