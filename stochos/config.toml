@@ -1,0 +1,84 @@
+font_size = 2  # Glyph scale multiplier for the 8x8 bitmap font: 1=8px, 2=16px, 3=24px
+hint_font_size = 1  # Optional override for element hint labels; defaults to 1 for dense target screens
+sub_hint_font_size = 2  # Optional override for sub-grid hint glyphs; defaults to font_size when omitted
+panel_font_size = 2  # Optional override for macro/search popup panels; defaults to sub_hint_font_size, then font_size
+
+[grid]
+hints = ["a", "s", "d", "f", "j", "k", "l", ";", "g", "h", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p"]
+sub_hints = ["a", "s", "d", "f", "j", "k", "l", ";", "g", "h", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "z", "x", "c", "v", "b"]
+sub_cols = 5
+target_cell_size = 90  # Enable dynamic grid by setting this value
+
+[bisect]
+hints = ["a", "s", "d", "f"]  # One per cell, row-major (length must be >= rows * cols)
+rows = 2
+cols = 2
+min_cell_size = 16  # Stop subdividing once a cell would be smaller than this, in pixels
+
+[hint]
+detector = "auto"  # "auto" (default) | "atspi" (Linux) | "cv"
+alphabet = ["a", "s", "d", "f", "j", "k", "l", ";", "g", "h", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p"]  # Keys used to build hint labels
+max_label_len = 3
+auto_click = false  # If true, click immediately when a typed label uniquely identifies a target
+downscale_longest = 1280  # CV: longest screen-capture side fed to the detector; 0 = no downscale
+edge_low_threshold = 50  # CV: Canny low threshold (raise to cut clutter, lower to catch faint controls)
+edge_high_threshold = 150  # CV: Canny high threshold
+
+[macros]
+playback_speed = 1.0  # 1.0 = recorded speed, 2.0 = twice as fast, 0.0 or negative = instant (no waits)
+
+[keys]
+normal = "n"
+bisect = "b"
+hint = "c"
+free_mode = "v"
+click = "space"
+double_click = "enter"
+triple_click = "m"
+close = "escape"
+undo = "backspace"
+right_click = "delete"
+middle_click = "insert"
+scroll_up = "up"
+scroll_down = "down"
+scroll_left = "left"
+scroll_right = "right"
+macro_menu = "tab"
+macro_record = "`"
+
+[colors]
+# Grid colors - Maximum visibility in all conditions
+cell_normal = "#00000050"        # Semi-black overlay (works on light backgrounds)
+text_dim = "#ffffff30"           # Semi-white dim (slightly visible on dark)
+sub_cell_normal = "#20202080"    # Dark grey with good opacity
+sub_bg = "#20202080"             # Matches sub cell
+text_first = "#00ff88ff"         # Teal-green (good in sunlight)
+text_second = "#ff8800ff"        # Orange (high visibility)
+cell_highlight = "#00000028"     # Subtle dark tint (no color, just darkens slightly)
+text_highlight = "#ffff00ff"     # Pure yellow (maximum contrast)
+cell_drag = "#ff00ddaa"          # Hot pink (extremely visible)
+panel_bg = "#121212f5"           # Near-black (96% opaque) - creates strong contrast barrier
+text_white = "#f5f5f5ff"         # Off-white (comfortable for long reading)
+text_grey = "#b8b8b8ff"          # Light grey (maintains 4.5:1 contrast ratio)
+selected_bg = "#2196f3ff"        # Material Design Blue (works in light/dark)
+rec_bg = "#f44336ff"             # Material Design Red (urgent, visible everywhere)
+border = "#00e676ff"             # Material Green (fresh, visible)
+border_dragging = "#e91e63ff"    # Material Pink (strong attention grabber)
+crosshair = "#ffaa00ff"          # Amber crosshair in free mode
+hint_chip_bg = "#2e1e1eee"       # Hint label background
+hint_text = "#00ccffff"          # Untyped hint label text
+hint_text_typed = "#50ff50ff"    # Typed hint label text
+hint_dim = "#66666688"           # Dimmed non-matching hints
+
+[free]
+left = "h"
+down = "j"
+up = "k"
+right = "l"
+fast = "="
+slow = "-"
+base_speed = 25
+fast_multiplier = 3.0
+slow_multiplier = 3.0
+min_speed = 1
+max_speed = 500

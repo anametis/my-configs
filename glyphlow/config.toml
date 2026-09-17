@@ -1,0 +1,86 @@
+text_actions = []
+scroll_distance = 0.05
+hide_scrolling_menu = false
+hide_covered_elements = true
+element_min_width = 15
+element_min_height = 15
+image_min_size = 20
+colored_frame_min_size = 200
+ocr_languages = ["en-US"]
+dictionaries = ["New Oxford American Dictionary"]
+visibility_checking_level = "Loose"
+electron_initial_wait_ms = 100
+
+[global_trigger_key]
+keys = "ALT + G"
+
+[theme]
+hint_font = "AndaleMono:12"
+hint_margin_size = 3
+hint_bg_color = "#769ff0d0"
+hint_fg_color = "#111726"
+hint_hl_color = "#11172620"
+menu_font = "AndaleMono:20"
+menu_margin_size = 10
+menu_bg_color = "#111726dd"
+menu_fg_color = "#a3aed2"
+menu_hl_color = "#11172620"
+frame_colors = [
+    "#e0af68",
+    "#9ece6a",
+    "#bb9af7",
+    "#f7768e",
+]
+enable_animation = true
+
+[[workflows]]
+display = " ProofRead"
+key = "R"
+starting_role = "TextField"
+actions = [
+    "Focus",
+    "SelectAll",
+    "ShowMenu",
+    { Sleep = 150 },
+    { SearchFor = { role = "MenuItem", title = "Proofread" } },
+    "Press",
+]
+
+[[workflows]]
+display = "⮺ Copy"
+key = "C"
+starting_role = "Image"
+actions = [
+    "ShowMenu",
+    { Sleep = 150 },
+    { SearchFor = { role = "MenuItem", title = "Copy Image$" } },
+    "Press",
+]
+
+[[workflows]]
+display = " Copy Link"
+key = "L"
+starting_role = "Image"
+actions = [
+    "ShowMenu",
+    { Sleep = 150 },
+    { SearchFor = { role = "MenuItem", title = "Copy Image Address" } },
+    "Press",
+]
+
+[[workflows]]
+display = "󰳽 Press [Left Click]"
+key = "["
+starting_role = "Generic"
+actions = ["Press"]
+
+[[workflows]]
+display = " Menu [Right Click]"
+key = "]"
+starting_role = "Generic"
+actions = [
+    "ShowMenu",
+    { Sleep = 150 },
+    { SearchFor = { role = "MenuItem", title = ".+" } },
+    "Press",
+]

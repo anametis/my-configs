@@ -10,5 +10,20 @@
       ],
       "enabled": true
     }
+  },
+  "disabled_providers": [],
+  "provider": {
+    "tokenrouterr": {
+      "name": "tokenrouter",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "https://api.tokenrouter.com/v1"
+      },
+      "models": {
+        "z-ai/glm-5.3-free": {
+          "name": "glm-5.3-free"
+        }
+      }
+    }
   }
 }

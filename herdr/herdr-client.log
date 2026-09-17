@@ -19,3 +19,19 @@
 2026-07-21T20:02:33.403461Z  INFO herdr::logging: herdr starting event="app.startup" subsystem="client" outcome="started" pid=4263
 2026-07-21T20:02:33.403593Z  INFO herdr::client: connecting to server path=/Users/ali/.config/herdr/herdr-client.sock
 2026-07-21T20:02:33.641060Z  INFO herdr::client: handshake succeeded version=16 encoding=SemanticFrame
+2026-09-11T21:39:27.644435Z  INFO herdr::logging: herdr starting event="app.startup" subsystem="client" outcome="started" pid=45128
+2026-09-11T21:39:27.644634Z  INFO herdr::client: connecting to server path=/Users/ali/.config/herdr/herdr-client.sock
+2026-09-11T21:39:27.890194Z  INFO herdr::client: handshake succeeded version=16 encoding=SemanticFrame
+2026-09-11T21:58:04.136818Z  INFO herdr::logging: herdr starting event="app.startup" subsystem="client" outcome="started" pid=62771
+2026-09-11T21:58:04.137015Z  INFO herdr::client: connecting to server path=/Users/ali/.config/herdr/herdr-client.sock
+2026-09-11T21:58:04.388140Z  INFO herdr::client::handshake: endpoint handshake succeeded generation=1 server_version=0.9.0
+2026-09-12T10:02:31.949853Z  INFO herdr::logging: herdr exiting event="app.shutdown" subsystem="client" outcome="completed" pid=62771
+2026-09-12T11:55:09.897305Z  INFO herdr::logging: herdr starting event="app.startup" subsystem="client" outcome="started" pid=48429
+2026-09-12T11:55:09.897472Z  INFO herdr::client: connecting to server path=/Users/ali/.config/herdr/herdr-client.sock
+2026-09-12T11:55:10.141975Z  INFO herdr::client::handshake: endpoint handshake succeeded generation=1 server_version=0.9.0
+2026-09-14T06:07:13.491226Z  INFO herdr::logging: herdr exiting event="app.shutdown" subsystem="client" outcome="completed" pid=48429
+2026-09-15T08:47:31.517618Z  INFO herdr::logging: herdr starting event="app.startup" subsystem="client" outcome="started" pid=32228
+2026-09-15T08:47:31.518093Z  INFO herdr::client: connecting to server path=/Users/ali/.config/herdr/herdr-client.sock
+2026-09-15T08:47:31.581107Z  INFO herdr::client::handshake: endpoint handshake succeeded generation=1 server_version=0.9.0
+2026-09-16T21:36:12.758540Z  INFO herdr::client: client terminal unavailable; detaching err=Inappropriate ioctl for device (os error 25)
+2026-09-16T21:36:12.762018Z  INFO herdr::logging: herdr exiting event="app.shutdown" subsystem="client" outcome="completed" pid=32228
