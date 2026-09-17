@@ -7,20 +7,17 @@ source "$CONFIG_DIR/icons.sh"
 
 [[ -n "$SKETCHYBAR_BIN" ]] || exit 0
 
-volume="${INFO:-}"
-muted=false
-
-if [[ ! "$volume" =~ ^[0-9]+$ ]]; then
-  volume_state=$(
-    /usr/bin/osascript \
-      -e 'set volumeInfo to get volume settings' \
-      -e 'return (output volume of volumeInfo as text) & "|" & (output muted of volumeInfo as text)' \
-      2>/dev/null || true
-  )
-  IFS='|' read -r volume muted <<< "$volume_state"
-fi
-
-[[ "$volume" =~ ^[0-9]+$ ]] || volume=0
+# Event INFO contains the level, but not the output's mute state.
+volume_state=$(
+  /usr/bin/osascript \
+    -e 'set volumeInfo to get volume settings' \
+    -e 'return (output volume of volumeInfo as text) & "|" & (output muted of volumeInfo as text)' \
+    2>/dev/null
+) || exit 0
+IFS='|' read -r volume muted <<< "$volume_state"
+[[ "$volume" =~ ^[0-9]+$ ]] || exit 0
+volume=$((10#$volume))
+(( volume <= 100 )) || exit 0
 
 if [[ "$muted" == "true" ]] || (( volume == 0 )); then
   icon="$VOLUME_MUTED_ICON"

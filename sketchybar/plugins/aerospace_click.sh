@@ -8,4 +8,4 @@ if [[ ! "$workspace" =~ ^[1-9]$ ]] || [[ -z "$AEROSPACE_BIN" ]]; then
   exit 1
 fi
 
-"$AEROSPACE_BIN" workspace "$workspace"
+exec "$AEROSPACE_BIN" workspace "$workspace"

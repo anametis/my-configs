@@ -25,10 +25,10 @@ if [[ -n "$wifi_device" ]]; then
   )
 
   if [[ "$power_state" == *": On" ]]; then
-    icon="$WIFI_CONNECTED_ICON"
     color="$OCCUPIED_TEXT"
     if [[ "$network_state" == "Current Wi-Fi Network:"* ]] ||
        { [[ -n "$wifi_address" ]] && [[ "$interface_status" == "active" ]]; }; then
+      icon="$WIFI_CONNECTED_ICON"
       color="$FOCUSED_TEXT"
     fi
   fi

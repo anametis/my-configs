@@ -9,7 +9,7 @@ source "$CONFIG_DIR/icons.sh"
 source "$CONFIG_DIR/helpers/app_icon.sh"
 
 runtime_prefix="${TMPDIR:-/tmp}/sketchybar-aerospace-${UID}"
-lock_dir="${runtime_prefix}.lock"
+lock_file="${runtime_prefix}.lockfile"
 hash_file="${runtime_prefix}.hash"
 error_file="${runtime_prefix}.error"
 
@@ -23,10 +23,10 @@ report_error_once() {
   fi
 }
 
-if ! mkdir "$lock_dir" 2>/dev/null; then
-  exit 0
-fi
-trap 'rmdir "$lock_dir" 2>/dev/null || true' EXIT
+# The kernel releases this lock even if a refresh is killed. Waiting also
+# lets a forced startup refresh run after an in-flight periodic refresh.
+exec 9>"$lock_file"
+/usr/bin/lockf -s -t 5 9 || exit 0
 
 if [[ -z "$SKETCHYBAR_BIN" ]] || [[ -z "$AEROSPACE_BIN" ]]; then
   report_error_once "SketchyBar: AeroSpace or SketchyBar executable not found"
@@ -56,7 +56,9 @@ state_hash=$(
 previous_hash=""
 [[ -r "$hash_file" ]] && IFS= read -r previous_hash < "$hash_file"
 
-if [[ "${1:-}" != "--force" ]] && [[ "$state_hash" == "$previous_hash" ]]; then
+if [[ "${1:-}" != "--force" ]] &&
+   [[ "${SENDER:-}" != "display_change" && "${SENDER:-}" != "system_woke" ]] &&
+   [[ "$state_hash" == "$previous_hash" ]]; then
   exit 0
 fi
 
@@ -66,10 +68,7 @@ for workspace in {1..9}; do
   printf -v "focused_$workspace" '%s' "false"
   printf -v "visible_$workspace" '%s' "false"
   printf -v "display_$workspace" '%s' ""
-
-  for ((slot=1; slot<=MAX_APP_ICONS; slot++)); do
-    printf -v "app_source_${workspace}_${slot}" '%s' ""
-  done
+  printf -v "apps_$workspace" '%s' ""
 done
 
 while IFS="$separator" read -r workspace focused visible display_id; do
@@ -96,14 +95,13 @@ while IFS="$separator" read -r workspace window_id application_name bundle_id; d
   printf -v "$count_variable" '%s' "$count_value"
 
   if (( count_value <= MAX_APP_ICONS )); then
-    image_source="$(app_image_source "$bundle_id" "$application_name")"
-    printf -v "app_source_${workspace}_${count_value}" '%s' "$image_source"
+    apps_variable="apps_$workspace"
+    apps_value="${!apps_variable}"
+    printf -v "$apps_variable" '%s' "${apps_value:+$apps_value$separator}${bundle_id:-$application_name}"
   fi
 done <<< "$window_state"
 
 arguments=()
-main_display="${display_1:-}"
-secondary_display="${display_6:-}"
 status_displays=""
 
 for workspace in {1..9}; do
@@ -122,7 +120,6 @@ done
 
 for workspace in {1..9}; do
   name="aerospace.space.$workspace"
-  group_name="aerospace.group.$workspace"
   count_variable="count_$workspace"
   focused_variable="focused_$workspace"
   visible_variable="visible_$workspace"
@@ -134,13 +131,6 @@ for workspace in {1..9}; do
 
   if [[ -z "$display_value" ]]; then
     arguments+=(--set "$name" drawing=off)
-    arguments+=(--set "$group_name" drawing=off)
-    for ((slot=1; slot<=MAX_APP_ICONS; slot++)); do
-      arguments+=(--set "aerospace.app.$workspace.$slot" drawing=off)
-    done
-    if (( workspace != 5 && workspace != 9 )); then
-      arguments+=(--set "aerospace.gap.$workspace" drawing=off)
-    fi
     continue
   fi
 
@@ -158,12 +148,23 @@ for workspace in {1..9}; do
     overflow_count=$((count_value - MAX_APP_ICONS))
   fi
 
-  if (( overflow_count > 0 )); then
-    overflow_label="+$overflow_count"
-    overflow_drawing=on
-  else
-    overflow_label=""
-    overflow_drawing=off
+  apps_variable="apps_$workspace"
+  app_label=" "
+  label_drawing=off
+  strip_arguments=(label.background.image.drawing=off label.width=0)
+  if (( count_value > 0 )); then
+    IFS="$separator" read -r -a app_identifiers <<< "${!apps_variable}"
+    strip_key=$(printf '%s\n' "${app_identifiers[@]}" "$APP_IMAGE_WIDTH" "$APP_IMAGE_HEIGHT" \
+      "$APP_IMAGE_SCALE" "$APP_IMAGE_PADDING" "$overflow_count" | /usr/bin/shasum -a 256 | /usr/bin/awk '{print $1}')
+    strip_path="$APP_STRIP_CACHE/$strip_key.png"
+    if [[ ! -f "$strip_path" || "$APP_STRIP_BIN" -nt "$strip_path" ]]; then
+      "$APP_STRIP_BIN" "$strip_path" "$APP_IMAGE_WIDTH" "$APP_IMAGE_HEIGHT" \
+        "$APP_IMAGE_SCALE" "$APP_IMAGE_PADDING" "$overflow_count" "${app_identifiers[@]}" || exit 1
+    fi
+    strip_width=$(( ${#app_identifiers[@]} * (APP_IMAGE_WIDTH + 2 * APP_IMAGE_PADDING) ))
+    (( overflow_count > 0 )) && strip_width=$((strip_width + 24))
+    label_drawing=on
+    strip_arguments=("label.width=$strip_width" "label.background.image=$strip_path" label.background.image.drawing=on)
   fi
 
   # Every workspace uses the same capsule geometry. Content determines width:
@@ -180,7 +181,7 @@ for workspace in {1..9}; do
   if [[ "$focused_value" == "true" ]]; then
     group_background="$ACTIVE_BACKGROUND"
     group_border="$ACTIVE_BORDER"
-    group_border_width=2
+    group_border_width=1
   elif [[ "$visible_value" == "true" ]]; then
     group_background="$VISIBLE_BACKGROUND"
     group_border="$VISIBLE_BORDER"
@@ -190,69 +191,22 @@ for workspace in {1..9}; do
     --set "$name"
       drawing=on
       "display=$display_value"
-      "label=$overflow_label"
-      "label.drawing=$overflow_drawing"
+      "label=$app_label"
+      "${strip_arguments[@]}"
+      "label.drawing=$label_drawing"
       icon.drawing=on
       "icon.font=$number_font"
       "icon.padding_left=$WORKSPACE_NUMBER_PADDING"
       "icon.padding_right=$WORKSPACE_NUMBER_PADDING"
       "icon.color=$text_color"
       "label.color=$text_color"
-      background.drawing=off
-  )
-
-  arguments+=(
-    --set "$group_name"
-      drawing=on
-      "display=$display_value"
+      background.drawing=on
       "background.color=$group_background"
       "background.border_color=$group_border"
       "background.border_width=$group_border_width"
   )
-
-  for ((slot=1; slot<=MAX_APP_ICONS; slot++)); do
-    app_name="aerospace.app.$workspace.$slot"
-    source_variable="app_source_${workspace}_${slot}"
-    image_source="${!source_variable}"
-
-    if [[ -n "$image_source" ]]; then
-      arguments+=(
-        --set "$app_name"
-          drawing=on
-          "display=$display_value"
-          "background.image=$image_source"
-          background.image.drawing=on
-      )
-    else
-      arguments+=(
-        --set "$app_name"
-          drawing=off
-          "display=$display_value"
-          background.image.drawing=off
-      )
-    fi
-  done
-
-  if (( workspace != 5 && workspace != 9 )); then
-    arguments+=(
-      --set "aerospace.gap.$workspace"
-        drawing=on
-        "display=$display_value"
-        "width=$WORKSPACE_GROUP_GAP"
-    )
-  fi
 done
 
-if [[ -n "$main_display" ]]; then
-  arguments+=(--set aerospace.spaces.main drawing=on "display=$main_display")
-else
-  arguments+=(--set aerospace.spaces.main drawing=off)
-fi
-if [[ -n "$secondary_display" ]]; then
-  arguments+=(--set aerospace.spaces.secondary drawing=on "display=$secondary_display")
-else
-  arguments+=(--set aerospace.spaces.secondary drawing=off)
-fi
 if [[ -n "$status_displays" ]]; then
   arguments+=(
     --set system.time "display=$status_displays"
@@ -290,10 +244,7 @@ else
   )
 fi
 
-# Structural bracket/drawing updates are intentionally not animated. Animating
-# these properties can leave a transient dark bracket on one display during
-# rapid AeroSpace/display changes. Native app/window updates are cheap enough
-# to apply atomically.
-"$SKETCHYBAR_BIN" "${arguments[@]}"
+# Apply display, content and focus changes in one batch.
+"$SKETCHYBAR_BIN" "${arguments[@]}" || exit 1
 
 printf '%s\n' "$state_hash" > "$hash_file"

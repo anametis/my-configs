@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+# Brackets are stacked below the first item. Keep that reference visible on
+# every display, even when workspace 1 belongs to another monitor.
+"$SKETCHYBAR_BIN" --add item aerospace.anchor left \
+  --set aerospace.anchor width=0 \
+    icon.drawing=off label.drawing=off background.drawing=off
+
 main_members=()
 secondary_members=()
 declare -a workspace_member_list

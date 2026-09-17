@@ -16,7 +16,7 @@ if [[ ! "$percentage" =~ ^[0-9]+$ ]]; then
 fi
 
 color="$VISIBLE_TEXT"
-if [[ "$battery_state" == *"AC attached"* ]] && [[ "$battery_state" != *"not charging"* ]]; then
+if [[ "$battery_state" == *"; charging"* ]]; then
   icon="$BATTERY_CHARGING_ICON"
   color="$FOCUSED_TEXT"
 elif (( percentage >= 90 )); then
@@ -27,10 +27,10 @@ elif (( percentage >= 35 )); then
   icon="$BATTERY_MEDIUM_ICON"
 elif (( percentage >= 15 )); then
   icon="$BATTERY_LOW_ICON"
-  color="$OCCUPIED_TEXT"
+  color="$WARNING_COLOR"
 else
   icon="$BATTERY_EMPTY_ICON"
-  color="$ACCENT_COLOR"
+  color="$CRITICAL_COLOR"
 fi
 
 "$SKETCHYBAR_BIN" --set "${NAME:-system.battery}" \

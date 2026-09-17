@@ -15,6 +15,12 @@ if [[ -z "$SKETCHYBAR_BIN" ]]; then
   exit 1
 fi
 
+mkdir -p "$APP_STRIP_CACHE"
+if [[ ! -x "$APP_STRIP_BIN" || "$CONFIG_DIR/helpers/app_strip.swift" -nt "$APP_STRIP_BIN" ]]; then
+  /usr/bin/swiftc -O "$CONFIG_DIR/helpers/app_strip.swift" -o "$APP_STRIP_BIN.new" &&
+    mv "$APP_STRIP_BIN.new" "$APP_STRIP_BIN" || exit 1
+fi
+
 # Transparent bar + shorter item capsules intentionally leaves a small clear
 # strip around/below the pills instead of having them touch the window below.
 "$SKETCHYBAR_BIN" --bar \

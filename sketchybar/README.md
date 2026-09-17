@@ -1,238 +1,78 @@
-# Minimal AeroSpace workspace bar
+# AeroSpace workspace bar
 
-This keeps the existing Bash + AeroSpace + SketchyBar structure and the same
-color palette/capsule layout, but changes application rendering substantially:
-workspace apps and the focused app use SketchyBar's native macOS app-image
-source (`app.<bundle-id>`) instead of approximating brands with Nerd Font
-glyphs. This revision also tunes spacing around those full-color native icons so
-they read more like menu-bar indicators and less like miniature Dock icons.
+A Bash SketchyBar config with two workspace groups, a focused-app capsule, and
+Time / Wi-Fi / Volume / Battery on the right. Workspaces 1–5 and 6–9 follow
+AeroSpace's display assignments. The layout and native macOS app icons are
+preserved.
 
-That means installed apps such as Obsidian, ChatGPT, Ghostty, Docker Desktop,
-OrbStack, VS Code, Zed, Finder, browsers, VPN clients, and other applications
-can display their actual macOS application artwork without maintaining a logo
-mapping or installing another app-icon font.
+## Appearance
 
-## What changed
+Edit `colors.sh` for the opaque navy palette and `settings.sh` for geometry.
+The transparent bar is 34pt tall, with 30pt outer capsules and 28pt workspace
+pills. Focus uses a brighter 1pt border without changing the pill's size.
 
-- `settings.sh`
-  - keeps the same 32px bar / 30px capsule layout
-  - softens capsule corner radii
-  - centralizes native app-image sizing and scale
-  - separates system-icon font settings from app-image settings
-- `items/aerospace_workspaces.sh`
-  - keeps the same nine AeroSpace workspace items
-  - pre-creates a small set of native app-image slots beside each workspace
-  - keeps clicking a workspace number or app icon focused on that workspace
-  - avoids repeatedly adding/removing SketchyBar items during normal updates
-- `plugins/aerospace_refresh.sh`
-  - continues using one all-workspace, one all-window, and one focused-window
-    AeroSpace query
-  - uses bundle IDs first and app names as a native-image fallback
-  - fills the reusable image slots with `app.<bundle-id>`
-  - displays `+N` when a workspace contains more apps than the configured limit
-- `items/front_app.sh`
-  - replaces the old chevron with the actual focused application's macOS icon
-  - retains the existing focused-app name capsule
-- `helpers/app_icon.sh`
-  - adds the centralized `app_image_source` helper
-  - retains the old Nerd Font map as a compatibility/fallback helper
-- `sketchybarrc`
-  - enables font smoothing and keeps the existing colors/overall structure
-- `items/system_status.sh`
-  - uses the explicit system icon font setting; its behavior is unchanged
+Useful settings:
 
-No VPN/Docker/CPU/RAM polling widget was added. The existing right-side
-Time / Wi-Fi / Volume / Battery group remains intentionally lightweight.
+| Setting | Default | Purpose |
+| --- | --- | --- |
+| `WORKSPACE_GROUP_GAP` | `12` | Space between workspace contents |
+| `APP_IMAGE_SCALE` | `0.58` | Native workspace app icon scale |
+| `FRONT_APP_IMAGE_SCALE` | `0.56` | Focused-app icon scale |
+| `FRONT_APP_OUTER_GAP` | `18` | Gap before the focused app |
+| `MAX_APP_ICONS` | `4` | App slots per workspace, then a `+N` label |
+| `SHOW_DUPLICATE_WINDOWS` | `false` | One icon per app instead of per window |
+| `RECONCILE_SECONDS` | `4` | Periodic AeroSpace reconciliation |
+| `FRONT_APP_MAX_LENGTH` | `22` | Focused-app label limit |
 
-## Native app icon behavior
+App artwork uses bundle IDs, falling back to app names. The older glyph map in
+`helpers/app_icon.sh` remains available for callers that use it directly.
+A zero-width first item anchors bracket layering on both displays. Every
+refresh reasserts the native window order, including when workspace data is
+unchanged. Clicks also request a refresh, even on the already focused workspace.
 
-AeroSpace already supplies both values needed by SketchyBar:
+## Updates and indicators
 
-```sh
-%{app-name}
-%{app-bundle-id}
-```
+- Workspace events update the bar immediately; periodic polling catches missed
+  window changes. Unchanged state skips rebuilding workspace content but still
+  repairs window stacking. Wake and display changes force content updates.
+- A native macOS file lock serializes refreshes and releases automatically if a
+  refresh process dies. Failed SketchyBar updates are retried instead of cached.
+- Battery charging reflects the actual charging state. Low and critical battery
+  levels use amber and red.
+- Volume queries both level and mute state. A failed query preserves the last
+  reading instead of inventing a zero level.
+- Wi-Fi uses the connected icon only when a network association is detected.
+  An active interface with an IP address handles macOS hiding the network name.
 
-The config prefers the bundle identifier:
+## Reload and verify
 
-```text
-app.com.openai.chat
-app.md.obsidian
-app.com.mitchellh.ghostty
-app.com.docker.docker
-app.com.apple.finder
-```
-
-If a bundle ID is missing, it falls back to `app.<application name>`.
-Because SketchyBar asks macOS for the installed application's artwork, there is
-no per-application logo list to maintain for normal apps.
-
-Inspect what AeroSpace reports with:
-
-```sh
-aerospace list-windows --all \
-  --format '%{app-name} | %{app-bundle-id}' \
-  | sort -u
-```
-
-## Replace your current config
-
-Keep a backup first:
-
-```sh
-cd ~/.config
-mv sketchybar "sketchybar.backup-$(date +%Y%m%d-%H%M%S)"
-unzip ~/Downloads/sketchybar-grouped-style.zip -d ~/.config
-chmod +x ~/.config/sketchybar/sketchybarrc \
-  ~/.config/sketchybar/helpers/*.sh \
-  ~/.config/sketchybar/items/*.sh \
-  ~/.config/sketchybar/plugins/*.sh
-```
-
-Then reload SketchyBar:
+After editing:
 
 ```sh
 sketchybar --reload
 ```
 
-A service restart is only needed if reload does not pick up the configuration:
-
-```sh
-brew services restart sketchybar
-```
-
-## Quick refresh after tuning icon size
-
-After changing only app sizing/spacing values in `settings.sh`:
-
-```sh
-sketchybar --reload
-```
-
-After a window/app-state change, this can force the AeroSpace data refresh:
+Force workspace reconciliation:
 
 ```sh
 ~/.config/sketchybar/plugins/aerospace_refresh.sh --force
 ```
 
-## Appearance tuning
-
-The most useful values are in `settings.sh`:
-
-```sh
-APP_IMAGE_WIDTH=17
-APP_IMAGE_HEIGHT=16
-APP_IMAGE_SCALE=0.58
-APP_IMAGE_PADDING=2
-FRONT_APP_IMAGE_SCALE=0.58
-CORNER_RADIUS=9
-ACTIVE_CORNER_RADIUS=7
-WORKSPACE_GROUP_GAP=3
-```
-
-If the native icons feel slightly too large, try `APP_IMAGE_SCALE=0.54`.
-If they feel too small, try `0.62`. Keep changes small because native macOS
-icons carry much more visual weight than monochrome font glyphs.
-
-Duplicate windows are deduplicated by default so two Chrome windows do not
-produce two large Chrome icons side-by-side. To restore one icon per window:
+Run the isolated plugin checks. They use fake device data and do not change the
+live bar, volume, network, or workspaces:
 
 ```sh
-export SHOW_DUPLICATE_WINDOWS=true
+python3 ~/.config/sketchybar/test_plugins.py
 ```
-
-## Verification
 
 Check shell syntax:
 
 ```sh
 cd ~/.config/sketchybar
-for f in sketchybarrc colors.sh settings.sh icons.sh helpers/*.sh items/*.sh plugins/*.sh; do
-  bash -n "$f" || exit 1
+for f in sketchybarrc *.sh helpers/*.sh items/*.sh plugins/*.sh; do
+  /bin/bash -n "$f" || exit 1
 done
 ```
 
-Reload in the foreground for useful errors:
-
-```sh
-brew services stop sketchybar
-sketchybar
-```
-
-Press `Ctrl-C` when finished, then restore the service with:
-
-```sh
-brew services start sketchybar
-```
-
-## Revert
-
-```sh
-rm -rf ~/.config/sketchybar
-mv ~/.config/sketchybar.backup-YYYYMMDD-HHMMSS ~/.config/sketchybar
-brew services restart sketchybar
-```
-
-## Grouped workspace trial
-
-This build implements the selected **Grouped Style** concept.
-
-The display rule is intentionally consistent:
-
-- occupied workspace: `number + app icons` inside one compact mini-group;
-- focused occupied workspace: same structure, using the existing active style;
-- empty workspace: narrow number only;
-- focused empty workspace: number-only active pill;
-- duplicate windows remain deduplicated by application;
-- groups have more separation from neighboring workspaces than app icons have
-  from each other;
-- the focused-app capsule has a larger outer gap from the workspace capsule.
-
-This is a trial rather than a permanent redesign. The most useful values to
-tune after testing are in `settings.sh`:
-
-```sh
-WORKSPACE_EMPTY_PADDING=4
-WORKSPACE_OCCUPIED_PADDING=4
-WORKSPACE_GROUP_GAP=9
-WORKSPACE_GROUP_EDGE_PADDING=3
-FRONT_APP_OUTER_GAP=15
-APP_IMAGE_SCALE=0.55
-```
-
-Reload after tuning:
-
-```sh
-sketchybar --reload
-```
-
-## Reference-style grouped trial
-
-This revision intentionally moves closer to the selected “Grouped Style” mockup:
-
-- visible dark outer workspace capsule
-- each empty workspace is a bordered rounded tile
-- occupied workspaces are a single number + native-icon rounded group
-- focused groups use the stronger active surface/border
-- larger native app artwork and taller 34px capsules
-- moderate spacing between groups instead of floating text/icons
-- front-app capsule matches the same height and visual weight
-
-The palette remains the same warm charcoal family; only opacity/contrast is
-increased to make the grouping visible on a real desktop background.
-
-## Reference grouped v2-style revision
-
-- Empty workspaces are number-only; occupied workspaces use the visible grouped capsule.
-- The current-app indicator is built from separate native-image and text items inside one bracket for stable geometry.
-- Capsule colors are opaque and bar blur is disabled, preventing display/wallpaper-dependent darkening.
-- Structural workspace updates are applied atomically instead of animated to avoid transient multi-display bracket artifacts.
-- The bar is slightly taller than the capsules, leaving a small transparent gap above/below the UI.
-
-## Spacing refinement
-
-This revision keeps the grouped visual styling unchanged and only refines spacing:
-
-- Workspace spacer width is 10pt, yielding roughly 6pt of visible separation after bracket edge padding.
-- The focused-app section starts 16pt after the workspace rail.
-- The bar is 42pt tall while capsules remain unchanged, leaving a little more transparent breathing room above/below the capsules and before application windows.
+The runtime uses macOS's built-in Bash and utilities plus SketchyBar and
+AeroSpace. Python 3 is only needed for the checks.

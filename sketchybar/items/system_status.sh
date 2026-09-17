@@ -5,12 +5,12 @@ status_item=(
   padding_right="$WORKSPACE_ITEM_GAP"
   icon.font="$SYSTEM_ICON_FONT"
   icon.color="$OCCUPIED_TEXT"
-  icon.padding_left=5
+  icon.padding_left=7
   icon.padding_right=4
   label.font="$STATUS_LABEL_FONT"
   label.color="$VISIBLE_TEXT"
   label.padding_left=0
-  label.padding_right=5
+  label.padding_right=7
   background.drawing=off
 )
 
