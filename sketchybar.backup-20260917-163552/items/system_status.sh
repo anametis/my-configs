@@ -3,7 +3,7 @@
 status_item=(
   padding_left="$WORKSPACE_ITEM_GAP"
   padding_right="$WORKSPACE_ITEM_GAP"
-  icon.font="$SYSTEM_ICON_FONT"
+  icon.font="$APP_ICON_FONT"
   icon.color="$OCCUPIED_TEXT"
   icon.padding_left=4
   icon.padding_right=3

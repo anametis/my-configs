@@ -61,15 +61,12 @@ if [[ "${1:-}" != "--force" ]] && [[ "$state_hash" == "$previous_hash" ]]; then
 fi
 
 for workspace in {1..9}; do
+  printf -v "icons_$workspace" '%s' ""
   printf -v "count_$workspace" '%s' "0"
   printf -v "seen_$workspace" '%s' "$separator"
   printf -v "focused_$workspace" '%s' "false"
   printf -v "visible_$workspace" '%s' "false"
   printf -v "display_$workspace" '%s' ""
-
-  for ((slot=1; slot<=MAX_APP_ICONS; slot++)); do
-    printf -v "app_source_${workspace}_${slot}" '%s' ""
-  done
 done
 
 while IFS="$separator" read -r workspace focused visible display_id; do
@@ -96,8 +93,15 @@ while IFS="$separator" read -r workspace window_id application_name bundle_id; d
   printf -v "$count_variable" '%s' "$count_value"
 
   if (( count_value <= MAX_APP_ICONS )); then
-    image_source="$(app_image_source "$bundle_id" "$application_name")"
-    printf -v "app_source_${workspace}_${count_value}" '%s' "$image_source"
+    icon="$(app_icon "$bundle_id" "$application_name")"
+    icons_variable="icons_$workspace"
+    icons_value="${!icons_variable}"
+    if [[ -n "$icons_value" ]]; then
+      icons_value+=" $icon"
+    else
+      icons_value="$icon"
+    fi
+    printf -v "$icons_variable" '%s' "$icons_value"
   fi
 done <<< "$window_state"
 
@@ -110,7 +114,6 @@ for workspace in {1..9}; do
   display_variable="display_$workspace"
   display_value="${!display_variable}"
   [[ -n "$display_value" ]] || continue
-
   if [[ ",$status_displays," != *",$display_value,"* ]]; then
     if [[ -n "$status_displays" ]]; then
       status_displays+=",$display_value"
@@ -122,21 +125,21 @@ done
 
 for workspace in {1..9}; do
   name="aerospace.space.$workspace"
+  icons_variable="icons_$workspace"
   count_variable="count_$workspace"
   focused_variable="focused_$workspace"
   visible_variable="visible_$workspace"
   display_variable="display_$workspace"
+  icons_value="${!icons_variable}"
   count_value="${!count_variable}"
   focused_value="${!focused_variable}"
   visible_value="${!visible_variable}"
   display_value="${!display_variable}"
 
-  if [[ -z "$display_value" ]]; then
-    arguments+=(--set "$name" drawing=off)
-    for ((slot=1; slot<=MAX_APP_ICONS; slot++)); do
-      arguments+=(--set "aerospace.app.$workspace.$slot" drawing=off)
-    done
-    continue
+  [[ -n "$display_value" ]] || continue
+
+  if (( count_value > MAX_APP_ICONS )); then
+    icons_value+=" $OVERFLOW_ICON"
   fi
 
   text_color="$EMPTY_TEXT"
@@ -157,65 +160,28 @@ for workspace in {1..9}; do
     text_color="$OCCUPIED_TEXT"
   fi
 
-  overflow_count=0
-  if (( count_value > MAX_APP_ICONS )); then
-    overflow_count=$((count_value - MAX_APP_ICONS))
-  fi
-
-  if (( overflow_count > 0 )); then
-    overflow_label="+$overflow_count"
-    overflow_drawing=on
-  else
-    overflow_label=""
-    overflow_drawing=off
-  fi
+  label_drawing=off
+  [[ -n "$icons_value" ]] && label_drawing=on
 
   arguments+=(
     --set "$name"
       drawing=on
       "display=$display_value"
-      "label=$overflow_label"
-      "label.drawing=$overflow_drawing"
+      "label=$icons_value"
+      "label.drawing=$label_drawing"
       "icon.color=$text_color"
       "label.color=$text_color"
       "background.color=$background_color"
       "background.border_color=$border_color"
       "background.border_width=$border_width"
   )
-
-  for ((slot=1; slot<=MAX_APP_ICONS; slot++)); do
-    app_name="aerospace.app.$workspace.$slot"
-    source_variable="app_source_${workspace}_${slot}"
-    image_source="${!source_variable}"
-
-    if [[ -n "$image_source" ]]; then
-      arguments+=(
-        --set "$app_name"
-          drawing=on
-          "display=$display_value"
-          "background.image=$image_source"
-          background.image.drawing=on
-      )
-    else
-      arguments+=(
-        --set "$app_name"
-          drawing=off
-          "display=$display_value"
-          background.image.drawing=off
-      )
-    fi
-  done
 done
 
 if [[ -n "$main_display" ]]; then
   arguments+=(--set aerospace.spaces.main drawing=on "display=$main_display")
-else
-  arguments+=(--set aerospace.spaces.main drawing=off)
 fi
 if [[ -n "$secondary_display" ]]; then
   arguments+=(--set aerospace.spaces.secondary drawing=on "display=$secondary_display")
-else
-  arguments+=(--set aerospace.spaces.secondary drawing=off)
 fi
 if [[ -n "$status_displays" ]]; then
   arguments+=(
@@ -228,21 +194,14 @@ fi
 
 if [[ -n "$front_state" ]]; then
   IFS="$separator" read -r front_workspace front_name front_bundle front_display <<< "$front_state"
-  front_image="$(app_image_source "$front_bundle" "$front_name")"
   arguments+=(
     --set aerospace.front_app
       drawing=on
       "display=$front_display"
       "label=$front_name"
-      "icon.background.image=$front_image"
-      icon.background.image.drawing=on
   )
 else
-  arguments+=(
-    --set aerospace.front_app
-      drawing=off
-      icon.background.image.drawing=off
-  )
+  arguments+=(--set aerospace.front_app drawing=off)
 fi
 
 if [[ "${SENDER:-}" == "aerospace_workspace_change" ]]; then

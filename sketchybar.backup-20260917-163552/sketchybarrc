@@ -22,7 +22,6 @@ fi
   color="$BAR_COLOR" \
   blur_radius=24 \
   shadow=off \
-  font_smoothing=on \
   padding_left=7 \
   padding_right=7 \
   margin=0 \
@@ -37,7 +36,7 @@ defaults=(
   icon.color="$EMPTY_TEXT"
   icon.padding_left="$WORKSPACE_PADDING"
   icon.padding_right=3
-  label.font="$OVERFLOW_FONT"
+  label.font="$APP_ICON_FONT"
   label.color="$OCCUPIED_TEXT"
   label.padding_left=0
   label.padding_right="$WORKSPACE_PADDING"

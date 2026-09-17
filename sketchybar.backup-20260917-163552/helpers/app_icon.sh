@@ -1,19 +1,5 @@
 #!/usr/bin/env bash
 
-# Prefer SketchyBar's native macOS application image source. This renders the
-# actual installed app icon (full color) and avoids maintaining a logo mapping.
-# Bundle identifiers are more stable than display names, so use them first.
-app_image_source() {
-  local identifier="${1:-}"
-  local application_name="${2:-}"
-
-  if [[ -n "$identifier" ]]; then
-    printf 'app.%s' "$identifier"
-  elif [[ -n "$application_name" ]]; then
-    printf 'app.%s' "$application_name"
-  fi
-}
-
 # Central Symbols Nerd Font application icon map.
 #
 # AeroSpace gives us both an app bundle identifier and a displayed app name.

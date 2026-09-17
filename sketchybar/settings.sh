@@ -1,23 +1,42 @@
 #!/usr/bin/env bash
 
+# Geometry stays intentionally compact; the slightly softer radii and tighter
+# internal spacing make the existing capsule layout feel less boxy.
 export BAR_HEIGHT=32
 export ITEM_HEIGHT=26
-export CORNER_RADIUS=5
-export ACTIVE_CORNER_RADIUS=4
-export WORKSPACE_PADDING=6
-export WORKSPACE_ITEM_GAP=2
-export CAPSULE_EDGE_PADDING=5
+export CORNER_RADIUS=8
+export ACTIVE_CORNER_RADIUS=6
+export WORKSPACE_PADDING=5
+export WORKSPACE_ITEM_GAP=1
+export CAPSULE_EDGE_PADDING=4
 export ICON_GAP=4
+
+# Workspace app icons are native macOS app images rendered by SketchyBar.
+# These values are deliberately small enough to keep several apps readable.
+export APP_IMAGE_WIDTH=19
+export APP_IMAGE_HEIGHT=18
+export APP_IMAGE_SCALE=0.72
+export APP_IMAGE_CORNER_RADIUS=4
+export FRONT_APP_IMAGE_WIDTH=19
+export FRONT_APP_IMAGE_HEIGHT=18
+export FRONT_APP_IMAGE_SCALE=0.74
+export FRONT_APP_IMAGE_CORNER_RADIUS=4
 
 export SHOW_DUPLICATE_WINDOWS="${SHOW_DUPLICATE_WINDOWS:-true}"
 export MAX_APP_ICONS="${MAX_APP_ICONS:-4}"
 export RECONCILE_SECONDS="${RECONCILE_SECONDS:-4}"
 export FRONT_APP_MAX_LENGTH="${FRONT_APP_MAX_LENGTH:-22}"
 
-export NUMBER_FONT="SF Pro:Semibold:15.0"
-export APP_ICON_FONT="Symbols Nerd Font:Regular:14.0"
-export FRONT_APP_FONT="SF Pro:Medium:14.0"
-export STATUS_LABEL_FONT="SF Pro:Medium:13.0"
+export NUMBER_FONT="SF Pro:Semibold:14.0"
+export OVERFLOW_FONT="SF Pro:Medium:10.0"
+export FALLBACK_APP_ICON_FONT="Symbols Nerd Font:Regular:13.0"
+export SYSTEM_ICON_FONT="Symbols Nerd Font:Regular:13.0"
+export FRONT_APP_FONT="SF Pro:Medium:13.5"
+export STATUS_LABEL_FONT="SF Pro:Medium:12.5"
+
+# Backwards-compatible alias for the small number of existing scripts that may
+# still refer to APP_ICON_FONT.
+export APP_ICON_FONT="$SYSTEM_ICON_FONT"
 
 resolve_command() {
   local command_name="$1"

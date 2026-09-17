@@ -1,79 +1,164 @@
 # Minimal AeroSpace workspace bar
 
-This configuration creates two compact workspace capsules and one matching
-system-status capsule. Workspaces 1–5 follow AeroSpace's main-monitor
-assignment; workspaces 6–9 follow its secondary-monitor assignment. A small
-focused-application capsule appears only on the currently focused display.
-Time, Wi-Fi, volume, and battery status appear on the right of both displays.
+This keeps the existing Bash + AeroSpace + SketchyBar structure and the same
+color palette/capsule layout, but changes application rendering substantially:
+workspace apps and the focused app now use SketchyBar's native macOS app-image
+source (`app.<bundle-id>`) instead of approximating brands with Nerd Font
+glyphs.
 
-## Files
+That means installed apps such as Obsidian, ChatGPT, Ghostty, Docker Desktop,
+OrbStack, VS Code, Zed, Finder, browsers, VPN clients, and other applications
+can display their actual macOS application artwork without maintaining a logo
+mapping or installing another app-icon font.
 
-- `sketchybarrc` sets up the transparent bar and loads the items.
-- `colors.sh`, `settings.sh`, and `icons.sh` contain all visual and behavioral
-  settings.
-- `items/aerospace_workspaces.sh` creates the nine static clickable items, two
-  brackets, and one hidden watcher.
-- `items/front_app.sh` creates the focused-application capsule.
-- `items/system_status.sh` creates the right-side status capsule.
-- `plugins/aerospace_refresh.sh` performs one all-workspace query, one
-  all-window query, and one focused-window query. It hashes the complete state
-  and batches changes into one SketchyBar update.
-- `helpers/app_icon.sh` is the single Nerd Font application icon map.
-- `plugins/time.sh`, `wifi.sh`, `volume.sh`, and `battery.sh` update the
-  right-side items. Wi-Fi uses interface state and its assigned IP address as
-  a fallback when macOS does not reveal the current network name.
+## What changed
 
-## Install and reload
+- `settings.sh`
+  - keeps the same 32px bar / 30px capsule layout
+  - softens capsule corner radii
+  - centralizes native app-image sizing and scale
+  - separates system-icon font settings from app-image settings
+- `items/aerospace_workspaces.sh`
+  - keeps the same nine AeroSpace workspace items
+  - pre-creates a small set of native app-image slots beside each workspace
+  - keeps clicking a workspace number or app icon focused on that workspace
+  - avoids repeatedly adding/removing SketchyBar items during normal updates
+- `plugins/aerospace_refresh.sh`
+  - continues using one all-workspace, one all-window, and one focused-window
+    AeroSpace query
+  - uses bundle IDs first and app names as a native-image fallback
+  - fills the reusable image slots with `app.<bundle-id>`
+  - displays `+N` when a workspace contains more apps than the configured limit
+- `items/front_app.sh`
+  - replaces the old chevron with the actual focused application's macOS icon
+  - retains the existing focused-app name capsule
+- `helpers/app_icon.sh`
+  - adds the centralized `app_image_source` helper
+  - retains the old Nerd Font map as a compatibility/fallback helper
+- `sketchybarrc`
+  - enables font smoothing and keeps the existing colors/overall structure
+- `items/system_status.sh`
+  - uses the explicit system icon font setting; its behavior is unchanged
+
+No VPN/Docker/CPU/RAM polling widget was added. The existing right-side
+Time / Wi-Fi / Volume / Battery group remains intentionally lightweight.
+
+## Native app icon behavior
+
+AeroSpace already supplies both values needed by SketchyBar:
 
 ```sh
-mkdir -p "$HOME/.config/aerospace" "$HOME/.config/sketchybar"
-cp aerospace/aerospace.toml "$HOME/.config/aerospace/aerospace.toml"
-cp -R sketchybar/. "$HOME/.config/sketchybar/"
-chmod +x "$HOME/.config/sketchybar/sketchybarrc" \
-  "$HOME/.config/sketchybar/items/"*.sh \
-  "$HOME/.config/sketchybar/plugins/"*.sh \
-  "$HOME/.config/sketchybar/helpers/"*.sh
-aerospace reload-config
+%{app-name}
+%{app-bundle-id}
+```
+
+The config prefers the bundle identifier:
+
+```text
+app.com.openai.chat
+app.md.obsidian
+app.com.mitchellh.ghostty
+app.com.docker.docker
+app.com.apple.finder
+```
+
+If a bundle ID is missing, it falls back to `app.<application name>`.
+Because SketchyBar asks macOS for the installed application's artwork, there is
+no per-application logo list to maintain for normal apps.
+
+Inspect what AeroSpace reports with:
+
+```sh
+aerospace list-windows --all \
+  --format '%{app-name} | %{app-bundle-id}' \
+  | sort -u
+```
+
+## Replace your current config
+
+Keep a backup first:
+
+```sh
+cd ~/.config
+mv sketchybar "sketchybar.backup-$(date +%Y%m%d-%H%M%S)"
+unzip ~/Downloads/sketchybar-native-icons.zip -d ~/.config
+chmod +x ~/.config/sketchybar/sketchybarrc \
+  ~/.config/sketchybar/helpers/*.sh \
+  ~/.config/sketchybar/items/*.sh \
+  ~/.config/sketchybar/plugins/*.sh
+```
+
+Then reload SketchyBar:
+
+```sh
+sketchybar --reload
+```
+
+A service restart is only needed if reload does not pick up the configuration:
+
+```sh
 brew services restart sketchybar
 ```
 
-No dependency was added. The configuration uses the already installed
-`Symbols Nerd Font` family.
+## Quick refresh after tuning icon size
 
-## Customize
+After changing only app sizing/spacing values in `settings.sh`:
 
-- Change the palette in `colors.sh`.
-- Change dimensions, the four-icon limit, the four-second reconciliation
-  interval, or `SHOW_DUPLICATE_WINDOWS` in `settings.sh`.
-- Add bundle IDs or app-name fallbacks only in `helpers/app_icon.sh`.
+```sh
+sketchybar --reload
+```
 
-## Troubleshooting
+After a window/app-state change, this can force the AeroSpace data refresh:
 
-- Confirm both commands exist with `command -v aerospace sketchybar`.
-- Confirm AeroSpace is running with `aerospace list-monitors`.
-- Confirm "Displays have separate Spaces" is enabled in System Settings →
-  Desktop & Dock → Mission Control. `defaults read com.apple.spaces
-  spans-displays` should print `0`.
-- Inspect service errors with
-  `tail -n 100 /opt/homebrew/var/log/sketchybar/sketchybar.err.log`.
-- Force a state refresh with
-  `sketchybar --trigger aerospace_state_change REASON=manual`.
+```sh
+~/.config/sketchybar/plugins/aerospace_refresh.sh --force
+```
+
+## Appearance tuning
+
+The most useful values are in `settings.sh`:
+
+```sh
+APP_IMAGE_WIDTH=19
+APP_IMAGE_HEIGHT=18
+APP_IMAGE_SCALE=0.72
+FRONT_APP_IMAGE_SCALE=0.74
+CORNER_RADIUS=8
+ACTIVE_CORNER_RADIUS=6
+```
+
+If the native icons feel slightly too large, try `APP_IMAGE_SCALE=0.66`.
+If they feel too small, try `0.78`. Keep changes small because macOS app icons
+are already normalized much better than mixed font glyphs.
+
+## Verification
+
+Check shell syntax:
+
+```sh
+cd ~/.config/sketchybar
+for f in sketchybarrc colors.sh settings.sh icons.sh helpers/*.sh items/*.sh plugins/*.sh; do
+  bash -n "$f" || exit 1
+done
+```
+
+Reload in the foreground for useful errors:
+
+```sh
+brew services stop sketchybar
+sketchybar
+```
+
+Press `Ctrl-C` when finished, then restore the service with:
+
+```sh
+brew services start sketchybar
+```
 
 ## Revert
 
-The pre-change backup is in
-`~/Downloads/MyMac/Projects/.config-backups/aerospace-sketchybar-20260804-2230/`.
-
 ```sh
-cp "$HOME/Downloads/MyMac/Projects/.config-backups/aerospace-sketchybar-20260804-2230/aerospace.toml" \
-  "$HOME/.config/aerospace/aerospace.toml"
-mv "$HOME/.config/sketchybar" "$HOME/.config/sketchybar.before-revert"
-cp -R "$HOME/Downloads/MyMac/Projects/.config-backups/aerospace-sketchybar-20260804-2230/sketchybar" \
-  "$HOME/.config/sketchybar"
-aerospace reload-config
+rm -rf ~/.config/sketchybar
+mv ~/.config/sketchybar.backup-YYYYMMDD-HHMMSS ~/.config/sketchybar
 brew services restart sketchybar
 ```
-
-The four-second watcher is a single hidden SketchyBar item, not a background
-loop. It prevents stale icons after lifecycle changes AeroSpace does not emit,
-and updates visible properties only when the complete state hash changes.
