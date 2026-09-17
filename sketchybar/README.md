@@ -2,8 +2,7 @@
 
 A Bash SketchyBar config with two workspace groups, a focused-app capsule, and
 Time / Wi-Fi / Volume / Battery on the right. Workspaces 1–5 and 6–9 follow
-AeroSpace's display assignments. The layout and native macOS app icons are
-preserved.
+AeroSpace's display assignments. Workspace capsules and the focused-app capsule use native macOS artwork.
 
 ## Appearance
 
@@ -24,17 +23,22 @@ Useful settings:
 | `RECONCILE_SECONDS` | `4` | Periodic AeroSpace reconciliation |
 | `FRONT_APP_MAX_LENGTH` | `22` | Focused-app label limit |
 
-App artwork uses bundle IDs, falling back to app names. The older glyph map in
-`helpers/app_icon.sh` remains available for callers that use it directly.
-A zero-width first item anchors bracket layering on both displays. Every
-refresh reasserts the native window order, including when workspace data is
-unchanged. Clicks also request a refresh, even on the already focused workspace.
+Each workspace is one SketchyBar item: its background, number, native app icons,
+and click target share one window. Native icons are combined into a transparent
+Retina image by `helpers/app_strip.swift`, then drawn inside the item's label.
+The icon strip is cached and reused across focus changes. Empty workspaces
+remain number-only; additional apps appear as `+N`.
+
+This preserves the native-icon capsule appearance without overlapping workspace
+brackets, separate app windows, or periodic stacking repairs. The helper uses
+macOS AppKit and is compiled on reload only when its source changes. Its binary
+and images live in `~/Library/Caches/sketchybar/app-strips`.
 
 ## Updates and indicators
 
 - Workspace events update the bar immediately; periodic polling catches missed
-  window changes. Unchanged state skips rebuilding workspace content but still
-  repairs window stacking. Wake and display changes force content updates.
+  window changes. Unchanged state skips rendering. Wake and display changes
+  force content updates. Clicking a capsule directly selects its workspace.
 - A native macOS file lock serializes refreshes and releases automatically if a
   refresh process dies. Failed SketchyBar updates are retried instead of cached.
 - Battery charging reflects the actual charging state. Low and critical battery
@@ -75,4 +79,5 @@ done
 ```
 
 The runtime uses macOS's built-in Bash and utilities plus SketchyBar and
-AeroSpace. Python 3 is only needed for the checks.
+AeroSpace. Apple Command Line Tools supply `swiftc` for the small native-icon
+helper. Python 3 is only needed for the checks.
